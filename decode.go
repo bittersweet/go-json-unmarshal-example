@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 )
@@ -17,14 +16,11 @@ type Payload struct {
 func handleReceive(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		log.Fatal("ReadAll", err)
-	}
-
 	p := map[string]string{}
-	err = json.Unmarshal(body, &p)
-	fmt.Printf("%#v\n", p)
+	err := json.NewDecoder(r.Body).Decode(&p)
+	if err != nil {
+		log.Fatal("NewDecoder", err)
+	}
 	for key, value := range p {
 		fmt.Printf("key: %s value: %s\n", key, value)
 	}
