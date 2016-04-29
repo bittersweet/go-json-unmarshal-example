@@ -25,7 +25,9 @@ func handleReceive(w http.ResponseWriter, r *http.Request) {
 	p := map[string]string{}
 	err = json.Unmarshal(body, &p)
 	fmt.Printf("%#v\n", p)
-	fmt.Println(p["pass.json"])
+	for key, value := range p {
+		fmt.Printf("key: %s value: %s\n", key, value)
+	}
 
 	// Build response object
 	resp := map[string]string{
