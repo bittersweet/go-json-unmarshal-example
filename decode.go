@@ -22,10 +22,10 @@ func handleReceive(w http.ResponseWriter, r *http.Request) {
 		log.Fatal("ReadAll", err)
 	}
 
-	p := Payload{}
+	p := map[string]string{}
 	err = json.Unmarshal(body, &p)
 	fmt.Printf("%#v\n", p)
-	fmt.Println("Icon:", p.Icon)
+	fmt.Println(p["pass.json"])
 
 	// Build response object
 	resp := map[string]string{
